@@ -7,9 +7,9 @@ NOOP=${NOOP:-false}
 POPTS='--config=puppet/puppet.conf'
 POPTS="${POPTS} --modulepath puppet/site/modules:puppet/core/modules"
 
+[ -n "${NOOP}" ]    && [ "${NOOP}" != 'false' ]    && POPTS="${POPTS} --noop"
 [ -n "${VERBOSE}" ] && [ "${VERBOSE}" != 'false' ] && POPTS="${POPTS} --verbose"
 [ -n "${DEBUG}" ]   && [ "${DEBUG}" != 'false' ]   && POPTS="${POPTS} --debug" && set -x
-[ -n "${NOOP}" ]    && [ "${NOOP}" != 'false' ]    && POPTS="${POPTS} --noop"
 
 [ -n "${UPDATE}" ] && \
   for dir in {site,core}; do

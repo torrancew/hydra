@@ -1,4 +1,7 @@
 ---
+:logger: puppet
+:merge_behavior: deeper
+
 :backends:
   - yaml
 

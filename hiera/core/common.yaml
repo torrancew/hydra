@@ -1,12 +1,16 @@
 ---
-packages:
+system::packages:
   - sudo
-  - vim
   - git
   - mr
   - vcsh
 
+user::path:
+  - /bin
+  - /usr/bin
+  - /usr/local/bin
+
 user::account:
   name: sysadmin
-  home:
-  shell:
+  shell: /bin/zsh
+  home_dir: /home/sysadmin

@@ -23,10 +23,10 @@ exec { 'checkout mr control repo':
 # Enable Selected Dotfile Repositories
 $mr_repos = hiera_array('user::mr_repos', [])
 $mr_repos.each |String $repo| {
-  exec { "enable ${repo} mr repo":
-    command => "ln -s ../available.d/${repo}.vcsh ./",
-    cwd     => "${uhome}/.config/mr/config.d",
-    creates => "${uhome}/.config/mr/config.d/${repo}.vcsh",
+  file { "${repo} mr config":
+    ensure  => link,
+    path    => "${uhome}/.config/mr/config.d/${repo}.vcsh",
+    target  => "../available.d/${repo}.vcsh",
     require => Exec['checkout mr control repo'],
     notify  => Exec['checkout dotfile repos'],
   }

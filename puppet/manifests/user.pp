@@ -1,19 +1,20 @@
 # Admin User Information
 $user  = hiera_hash('user::account')
 $uname = $user['name']
-$uhome = $user['home']
+$uhome = $user['home_dir']
 $upath = hiera_array('user::path')
 
 # Set Exec Defaults
 Exec {
-  user      => $uname,
-  cwd       => $uhome,
-  path      => $upath,
-  logoutput => false,
+  user        => $uname,
+  cwd         => $uhome,
+  path        => $upath,
+  environment => ["HOME=${uhome}", "XDG_CONFIG_HOME=${uhome}/.config"],
+  logoutput   => false,
 }
 
 # mr Configuration
-$mr_ctrl_repo = hiera('user::mr_ctrl', 'https://github.com/RichiH/vcsh_mr_template.git')
+$mr_ctrl_repo = hiera('user::mr_ctrl_repo')
 exec { 'checkout mr control repo':
   command => "vcsh clone ${mr_ctrl_repo} mr",
   creates => "${home}/.config/mr",

@@ -1,7 +1,7 @@
 # Set Exec Defaults
 Exec {
   user      => 'root',
-  path      => ['/bin', '/usr/bin', '/usr/local/bin'],
+  path      => ['/bin', '/usr/bin', '/usr/local/bin', '/opt/puppetlabs/bin'],
   logoutput => false,
 }
 
@@ -9,7 +9,7 @@ Exec {
 $repo_upd = hiera('system::repo_update', undef)
 if $repo_upd {
   exec { 'update repositories':
-    command => $repo_upd
+    command => $repo_upd,
   }
 
   Package {
@@ -29,17 +29,18 @@ package { $packages:
 # Configure Admin User
 $user  = hiera_hash('user::account')
 $uname = $user['name']
-$uhome = $user['home']
-$upath = hiera_array('user::path')
-create_resources('account', {$uname => $user})
+$uhome = $user['home_dir']
+create_resources('account', {"${uname}" => $user})
 
 # Perform User Setup
 Account[$uname] ->
 exec { 'user configuration':
-  command   => "puppet apply ${::puppet_args} puppet/manifests/user.pp",
-  user      => $uname,
-  cwd       => $uhome,
-  path      => $upath,
-  returns   => [0, 2],
-  logoutput => true,
+  command     => "puppet apply ${::puppet_args} puppet/manifests/user.pp",
+  user        => $uname,
+  cwd         => $::puppet_cwd,
+  path        => $upath,
+  returns     => [0, 2],
+  environment => ["HOME=${uhome}"],
+  logoutput   => true,
+  require     => Class['puppet_agent'],
 }

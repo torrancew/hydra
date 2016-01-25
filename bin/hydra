@@ -4,7 +4,7 @@ VERBOSE=${VERBOSE:-true}
 DEBUG=${DEBUG:-false}
 NOOP=${NOOP:-false}
 
-POPTS='--config=puppet/puppet.conf'
+POPTS='--config=puppet/puppet.conf --logdest console'
 POPTS="${POPTS} --modulepath puppet/site/modules:puppet/core/modules"
 
 [ -n "${NOOP}" ]    && [ "${NOOP}" != 'false' ]    && POPTS="${POPTS} --noop"
@@ -28,4 +28,5 @@ echo "== Running Puppet =="
   GEM_PATH="${GEM_PATH}"        \
   GEM_ROOT="${GEM_ROOT}"        \
   FACTER_puppet_args="${POPTS}" \
+  FACTER_puppet_cwd="$(pwd)"    \
   puppet apply ${POPTS} puppet/manifests/system.pp

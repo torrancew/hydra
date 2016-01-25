@@ -3,4 +3,7 @@ forge 'forge.puppetlabs.com'
 mod 'torrancew/account'
 mod 'puppetlabs/stdlib'
 mod 'puppetlabs/vcsrepo'
+
 mod 'puppetlabs/puppet_agent'
+mod 'puppetlabs/inifile'
+mod 'puppetlabs/apt'

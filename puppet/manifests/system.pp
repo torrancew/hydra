@@ -40,6 +40,7 @@ exec { 'user configuration':
   cwd         => $::puppet_cwd,
   returns     => [0, 2],
   environment => ["HOME=${uhome}"],
+  provider    => 'shell',
   logoutput   => true,
   require     => Class['puppet_agent'],
 }

@@ -26,6 +26,7 @@ $mr_repos.each |String $repo| {
   exec { "enable ${repo} mr repo":
     command => "ln -s ../available.d/${repo}.vcsh ./",
     cwd     => "${uhome}/.config/mr/config.d",
+    creates => "${uhome}/.config/mr/config.d/${repo}.vcsh",
     require => Exec['checkout mr control repo'],
     notify  => Exec['checkout dotfile repos'],
   }

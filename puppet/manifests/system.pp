@@ -38,7 +38,6 @@ exec { 'user configuration':
   command     => "puppet apply ${::puppet_args} puppet/manifests/user.pp",
   user        => $uname,
   cwd         => $::puppet_cwd,
-  path        => $upath,
   returns     => [0, 2],
   environment => ["HOME=${uhome}"],
   logoutput   => true,

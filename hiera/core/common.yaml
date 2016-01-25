@@ -12,5 +12,5 @@ user::path:
 
 user::account:
   name: sysadmin
-  shell: /bin/zsh
+  shell: /bin/bash
   home_dir: /home/sysadmin

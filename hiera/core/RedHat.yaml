@@ -1,0 +1,2 @@
+---
+system::repo_update: yum makecache fast

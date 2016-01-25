@@ -1,0 +1,12 @@
+---
+packages:
+  - sudo
+  - vim
+  - git
+  - mr
+  - vcsh
+
+user::account:
+  name: sysadmin
+  home:
+  shell:

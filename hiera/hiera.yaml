@@ -1,0 +1,15 @@
+---
+:backends:
+  - yaml
+
+:yaml:
+  :datadir: hiera
+
+:hierarchy:
+  - "site/%{::hostname}"
+  - "site/%{::osfamily}"
+  - "core/%{::osfamily}"
+  - "site/%{::kernel}"
+  - "core/%{::kernel}"
+  - site/common
+  - core/common

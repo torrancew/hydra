@@ -1,0 +1,7 @@
+bin/*
+site/*
+modules/
+Gemfile.lock
+
+!.gitkeep
+!bin/hydra

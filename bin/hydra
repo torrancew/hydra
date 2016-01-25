@@ -1,0 +1,31 @@
+#! /bin/bash -e
+
+VERBOSE=${VERBOSE:-true}
+DEBUG=${DEBUG:-false}
+NOOP=${NOOP:-false}
+
+POPTS='--config=puppet/puppet.conf'
+POPTS="${POPTS} --modulepath puppet/site/modules:puppet/core/modules"
+
+[ -n "${VERBOSE}" ] && [ "${VERBOSE}" != 'false' ] && POPTS="${POPTS} --verbose"
+[ -n "${DEBUG}" ]   && [ "${DEBUG}" != 'false' ]   && POPTS="${POPTS} --debug" && set -x
+[ -n "${NOOP}" ]    && [ "${NOOP}" != 'false' ]    && POPTS="${POPTS} --noop"
+
+[ -n "${UPDATE}" ] && \
+  for dir in {site,core}; do
+    if [ -f "puppet/${dir}/Puppetfile" ]; then
+      echo "== Updating ${dir} Puppet modules =="
+      pushd "puppet/${dir}" &>/dev/null
+        r10k puppetfile install --verbose
+      popd &>/dev/null
+    fi
+  done
+
+echo "== Running Puppet =="
+/usr/bin/sudo /usr/bin/env      \
+  PATH="${PATH}"                \
+  GEM_HOME="${GEM_HOME}"        \
+  GEM_PATH="${GEM_PATH}"        \
+  GEM_ROOT="${GEM_ROOT}"        \
+  FACTER_puppet_args="${POPTS}" \
+  puppet apply ${POPTS} puppet/manifests/system.pp

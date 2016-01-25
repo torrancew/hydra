@@ -1,5 +1,6 @@
 bin/*
-site/*
+vendor/
+*/site/*
 modules/
 Gemfile.lock
 

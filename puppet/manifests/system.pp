@@ -18,7 +18,7 @@ if $repo_upd {
 }
 
 # Manage Puppet
-class { 'puppet_agent': service_name => [] }
+class { 'puppet_agent': service_names => [] }
 
 # Install Base Packages
 $packages = hiera_array('system::packages', [])
